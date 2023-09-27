@@ -1,5 +1,4 @@
 import os
-#flaskの全てをインポートする
 from flask import Flask, render_template, request, redirect, url_for
 
 #Flaskクラスをインスタンス化して変数appに割り当てる
