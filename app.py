@@ -32,8 +32,13 @@ def upload():
 
             # 画像を保存
             image.save(file_path)
-            return '画像がアップロードされました: ' + image.filename
+
+            # テキストデータを取得
+            description = request.form.get('description', '')
+
+            return render_template('index.html')
     return '画像のアップロードに失敗しました'
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
+

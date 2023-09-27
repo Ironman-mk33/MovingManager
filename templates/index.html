@@ -2,15 +2,83 @@
 <html>
 
 <head>
-    <title>Camera Upload</title>
+    <title>Camera Upload with Text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            font-size: 1rem;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            width: 15rem;
+        }
+
+        /* <input type="file"> のデフォルトスタイルを非表示に */
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            height: 1rem;
+            text-align: start;
+            /* 一括でフォントサイズを大きく */
+        }
+
+        input[type="submit"] {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            /* 一括でフォントサイズを大きく */
+        }
+
+        /* カスタムスタイルを適用したボタン */
+        .custom-file-upload {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            height: 5rem;
+            width: 10rem;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Camera Upload</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" accept="image/*" capture="camera" name="image">
-        <input type="submit" value="Upload">
-    </form>
+    <center>
+        <h1>Camera Upload with Text</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <!-- カスタムスタイルを適用したボタン -->
+            <label for="file-upload" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i> Upload Image
+            </label>
+            <br>
+            <!-- 非表示の<input type="file"> -->
+            <input id="file-upload" type="file" accept="image/*" capture="camera" name="image">
+            <input type="text" name="description" placeholder="Enter a description">
+            <br>
+            <input type="submit" value="Upload">
+        </form>
+    </center>
+
 </body>
 
 </html>
