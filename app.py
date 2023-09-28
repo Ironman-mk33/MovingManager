@@ -5,13 +5,17 @@ from flask import Flask, render_template, request, redirect, url_for
 #Flaskクラスをインスタンス化して変数appに割り当てる
 app = Flask(__name__)
 
+# SSL証明書と秘密鍵のファイルパスを指定します
+ssl_certfile = 'ssl\cert.pem'  # 証明書のパス
+ssl_keyfile = 'ssl\privkey.pem'  # 秘密鍵のパス
+
 # アップロードされた画像を保存するディレクトリを指定
 UPLOAD_FOLDER = 'D:\Documents\Develop\projects\Python\MovingManager\Images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('cameraProcessing.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -40,5 +44,5 @@ def upload():
     return '画像のアップロードに失敗しました'
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(ssl_context=(ssl_certfile, ssl_keyfile),debug=False, host='0.0.0.0', port=443)
 
