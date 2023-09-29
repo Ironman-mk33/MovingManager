@@ -1,21 +1,22 @@
 import os
 import datetime
+import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
 
-#Flaskクラスをインスタンス化して変数appに割り当てる
-app = Flask(__name__)
+# Flaskクラスをインスタンス化して変数appに割り当てる
+app = Flask(__name__,static_folder='resources')
 
 # SSL証明書と秘密鍵のファイルパスを指定します
 ssl_certfile = 'ssl\cert.pem'  # 証明書のパス
 ssl_keyfile = 'ssl\privkey.pem'  # 秘密鍵のパス
 
 # アップロードされた画像を保存するディレクトリを指定
-UPLOAD_FOLDER = 'D:\Documents\Develop\projects\Python\MovingManager\Images'
+UPLOAD_FOLDER = 'resources\\images\\upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def index():
-    return render_template('cameraProcessing.html')
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -39,6 +40,17 @@ def upload():
 
             # テキストデータを取得
             description = request.form.get('description', '')
+
+            # データベースへのアクセス準備
+            conn = sqlite3.connect('luggageTable.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO luggage (id,name,description,imagepath,ismoved) VALUES (?,?,?,?,?)", (image.filename,image.filename,description,file_path,False))
+
+            # データベースへの変更を保存
+            conn.commit()
+
+            # データベース接続を閉じる
+            conn.close()
 
             return render_template('index.html')
     return '画像のアップロードに失敗しました'

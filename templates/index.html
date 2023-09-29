@@ -19,7 +19,7 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             font-size: 24px;
-            width: 15rem;
+            width: 100%;
         }
 
         /* <input type="file"> のデフォルトスタイルを非表示に */
@@ -36,15 +36,20 @@
             border-radius: 5px;
             font-size: 1rem;
             height: 1rem;
+            width: 80%;
             text-align: start;
             /* 一括でフォントサイズを大きく */
         }
 
         input[type="submit"] {
-            border: 1px solid #ccc;
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
             border-radius: 5px;
-            font-size: 1rem;
-            /* 一括でフォントサイズを大きく */
+            font-size: 24px;
+            cursor: pointer;
+            width: 80%;
         }
 
         /* カスタムスタイルを適用したボタン */
@@ -54,10 +59,14 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            font-size: 1rem;
+            font-size: 24px;
             cursor: pointer;
-            height: 5rem;
-            width: 10rem;
+            width: 80%;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -65,17 +74,21 @@
 <body>
     <center>
         <h1>Camera Upload with Text</h1>
+        <video id="video" playsinline=true></video>
+        <p id="barcodeValue"></p> <!-- バーコードの値を表示する要素 -->
+        <script src="resources\script\barcodeReader.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+        <script async src="resources\lib\opencv.js" type="text/javascript"></script>
+
         <form action="/upload" method="POST" enctype="multipart/form-data">
-            <!-- カスタムスタイルを適用したボタン -->
+            <input type="text" id="barcodeValue">
             <label for="file-upload" class="custom-file-upload">
                 <i class="fa fa-cloud-upload"></i> Upload Image
             </label>
-            <br>
             <!-- 非表示の<input type="file"> -->
-            <input id="file-upload" type="file" accept="image/*" capture="camera" name="image">
             <input type="text" name="description" placeholder="Enter a description">
-            <br>
             <input type="submit" value="Upload">
+            <input id="file-upload" type="file" accept="image/*" capture="camera" name="image">
         </form>
     </center>
 
