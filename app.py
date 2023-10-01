@@ -38,13 +38,16 @@ def upload():
             # 画像を保存
             image.save(file_path)
 
+            # idを取得
+            id = request.form.get('barcodeValue', '')
+
             # テキストデータを取得
             description = request.form.get('description', '')
 
             # データベースへのアクセス準備
             conn = sqlite3.connect('luggageTable.sqlite3')
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO luggage (id,name,description,imagepath,ismoved) VALUES (?,?,?,?,?)", (image.filename,image.filename,description,file_path,False))
+            cursor.execute("INSERT INTO luggage (id,name,description,imagepath,ismoved) VALUES (?,?,?,?,?)", (id,image.filename,description,file_path,False))
 
             # データベースへの変更を保存
             conn.commit()

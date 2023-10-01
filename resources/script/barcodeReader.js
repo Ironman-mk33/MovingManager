@@ -57,7 +57,7 @@ function readBarcodeFromVideoDevice(video) {
         codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
             if (result) {
                 const barcodeValue = result.text;
-                barcodeValueElement.textContent = 'バーコード: ' + barcodeValue; // バーコードの値を表示
+                barcodeValueElement.value = barcodeValue; // バーコードの値を表示
             }
             if (err) {
                 //console.error('バーコード読み取りエラー:', err);
