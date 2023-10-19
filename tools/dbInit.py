@@ -2,7 +2,7 @@ import sqlite3
 
 conn = sqlite3.connect('luggageTable.sqlite3')
 cursor = conn.cursor()
-#cursor.execute('''DROP TABLE luggage''')
+cursor.execute('''DROP TABLE luggage''')
 
 # テーブルを作成
 cursor.execute('''CREATE TABLE IF NOT EXISTS luggage (

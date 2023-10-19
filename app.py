@@ -15,8 +15,8 @@ UPLOAD_FOLDER = 'resources\\images\\upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
-def index():
-    return render_template('index.html')
+def RegisterView():
+    return render_template('ConfirmView.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -55,8 +55,45 @@ def upload():
             # データベース接続を閉じる
             conn.close()
 
-            return render_template('index.html')
+            return render_template('RegisterView.html')
     return '画像のアップロードに失敗しました'
+
+@app.route('/confirm', methods=['POST'])
+def confirm():
+    # idを取得
+    id = request.form.get('barcodeValue', '')
+    # ismovedを取得
+    #テキストの情報をBool
+    ismoved = request.form.get('ismoved', '')
+
+    # データベースへのアクセス準備
+    conn = sqlite3.connect('luggageTable.sqlite3')
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT ismoved FROM luggage WHERE id = ?", (id,))
+    result = cursor.fetchone()
+
+    if result:
+        # アイテムが見つかった場合
+        new_item_name = "新しいアイテム名"
+
+        # アイテム名を更新
+        cursor.execute("UPDATE luggage SET ismoved = ? WHERE id = ?", (ismoved, id))
+
+        # 変更をコミット
+        conn.commit()
+        print("アイテム名を変更しました。")
+    else:
+        print("指定したIDのアイテムは見つかりませんでした。")
+
+
+    # データベースへの変更を保存
+    conn.commit()
+
+    # データベース接続を閉じる
+    conn.close()
+
+    return render_template('ConfirmView.html')
 
 if __name__ == '__main__':
     app.run(ssl_context=(ssl_certfile, ssl_keyfile),debug=False, host='0.0.0.0', port=443)
