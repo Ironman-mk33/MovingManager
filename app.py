@@ -15,8 +15,16 @@ UPLOAD_FOLDER = 'resources\\images\\upload'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
-def RegisterView():
+def TopView():
+    return render_template('TopPage.html')
+
+@app.route("/ConfirmView")
+def ConfirmView():
     return render_template('ConfirmView.html')
+
+@app.route("/RegisterView")
+def RegisterView():
+    return render_template('RegisterView.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
